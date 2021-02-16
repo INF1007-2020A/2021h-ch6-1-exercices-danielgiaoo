@@ -5,51 +5,74 @@
 def order(values: list = None) -> list:
     if values is None:
         # TODO: demander les valeurs ici
-        pass
+        values = []
+        while len(values) < 10:
+            values.append(int(input("Entrez une valeur:\n")))
 
-    return []
+    return sorted(values)
 
 
 def anagrams(words: list = None) -> bool:
     if words is None:
         # TODO: demander les mots ici
-        pass
+        words = []
+        while len(words) < 2:
+            words.append(input("Entrez un chaine de caractere:\n"))
 
-    return False
+    return sorted(words[0]) == sorted(words[1])
 
 
 def contains_doubles(items: list) -> bool:
-    return False
+    return len(set(items)) != len(items)
 
 
 def best_grades(student_grades: dict) -> dict:
     # TODO: Retourner un dictionnaire contenant le nom de l'étudiant ayant la meilleure moyenne ainsi que sa moyenne
-    return {}
+    best_student = dict()
+    for key, value in student_grades.items():
+        average = sum(value) / len(value)
+
+        if len(best_student) == 0 or list(best_student.values())[0] < average:
+            best_student = {key: average}
+
+    return best_student
 
 
 def frequence(sentence: str) -> dict:
     # TODO: Afficher les lettres les plus fréquentes
     #       Retourner le tableau de lettres
+    frequency = {letter: sentence.count(letter) for letter in sentence.strip()}
 
-    return {}
+    sorted_keys = sorted(frequency, reverse=True, key=frequency.__getitem__)
+    for key in sorted_keys:
+        if frequency[key] > 5:
+            print(f"le caractere {key} revient {frequency[key]} fois.")
+    return frequency
 
 
 def get_recipes():
     # TODO: Demander le nom d'une recette, puis ses ingredients et enregistrer dans une structure de données
-    pass
+    name = input("Quel est le nom de votre recette?\n")
+    ingredrient = input("Entrer la liste d'ingredients? Separer les ingredients par une ,\n").split(",")
+
+    return {name: ingredrient}
 
 
 def print_recipe(ingredients) -> None:
     # TODO: Demander le nom d'une recette, puis l'afficher si elle existe
-    pass
+    name = input("Quel est le nom de votre recette?\n")
 
+    if name in ingredients:
+        print(ingredients[name])
+    else:
+        print("Cette recette n'existe pas ")
 
 def main() -> None:
     print(f"On essaie d'ordonner les valeurs...")
-    order()
+    print(order())
 
     print(f"On vérifie les anagrammes...")
-    anagrams()
+    print(anagrams())
 
     my_list = [3, 3, 5, 6, 1, 1]
     print(f"Ma liste contient-elle des doublons? {contains_doubles(my_list)}")
